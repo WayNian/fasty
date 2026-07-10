@@ -39,6 +39,17 @@ class SettingsViewModel: ObservableObject {
     @Published var configPath: String = "~/.config/fasty/config"
     @Published var logLevel: LogLevel = .info
 
+    // Language
+    @Published var appLanguage: AppLanguage = .chinese {
+        didSet {
+            if appLanguage != oldValue {
+                LocalizableManager.shared.setLanguage(appLanguage)
+                objectWillChange.send()
+                saveSettings()
+            }
+        }
+    }
+
     private let userDefaults = UserDefaults.standard
 
     var currentColorScheme: TerminalColorScheme {
@@ -60,6 +71,13 @@ class SettingsViewModel: ObservableObject {
         translucentBackground = userDefaults.bool(forKey: "translucentBackground")
         backgroundOpacity = userDefaults.double(forKey: "backgroundOpacity") != 0 ? userDefaults.double(forKey: "backgroundOpacity") : backgroundOpacity
         configPath = userDefaults.string(forKey: "configPath") ?? configPath
+
+        // Load language
+        if let langRaw = userDefaults.string(forKey: "appLanguage"),
+           let lang = AppLanguage(rawValue: langRaw) {
+            appLanguage = lang
+            LocalizableManager.shared.setLanguage(lang)
+        }
     }
 
     func saveSettings() {
@@ -73,6 +91,7 @@ class SettingsViewModel: ObservableObject {
         userDefaults.set(translucentBackground, forKey: "translucentBackground")
         userDefaults.set(backgroundOpacity, forKey: "backgroundOpacity")
         userDefaults.set(configPath, forKey: "configPath")
+        userDefaults.set(appLanguage.rawValue, forKey: "appLanguage")
     }
 
     func loadGhosttyConfig() {

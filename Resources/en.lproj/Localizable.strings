@@ -1,0 +1,50 @@
+/* Settings */
+"settings.general" = "General";
+"settings.appearance" = "Appearance";
+"settings.keybindings" = "Keybindings";
+"settings.advanced" = "Advanced";
+
+/* General Settings */
+"general.shell" = "Shell";
+"general.shell.default" = "Default Shell";
+"general.shell.workdir" = "Working Directory";
+"general.shell.restore" = "Restore previous session on launch";
+"general.window" = "Window";
+"general.window.restore" = "Restore window state on launch";
+"general.window.focusLoss" = "Open new window on focus loss";
+
+/* Appearance Settings */
+"appearance.theme" = "Theme";
+"appearance.font" = "Font";
+"appearance.font.family" = "Font Family";
+"appearance.font.size" = "Font Size";
+"appearance.window" = "Window";
+"appearance.window.translucent" = "Translucent background";
+"appearance.window.opacity" = "Opacity";
+"appearance.window.cursor" = "Cursor Style";
+"appearance.window.cursor.block" = "Block";
+"appearance.window.cursor.beam" = "Beam";
+"appearance.window.cursor.underline" = "Underline";
+
+/* Keybindings Settings */
+"keybindings.global" = "Global Shortcuts";
+"keybindings.quickTerminal" = "Quick Terminal (Ctrl+`)";
+"keybindings.custom" = "Custom keybindings can be configured in the config file.";
+"keybindings.ghostty" = "Fasty supports Ghostty-compatible keybind syntax.";
+
+/* Advanced Settings */
+"advanced.config" = "Configuration";
+"advanced.config.path" = "Config File Path";
+"advanced.config.load" = "Load Ghostty Config";
+"advanced.config.open" = "Open Config File";
+"advanced.debug" = "Debug";
+"advanced.debug.logLevel" = "Log Level";
+"advanced.debug.logLevel.error" = "Error";
+"advanced.debug.logLevel.warning" = "Warning";
+"advanced.debug.logLevel.info" = "Info";
+"advanced.debug.logLevel.debug" = "Debug";
+
+/* Language Settings */
+"language" = "Language";
+"language.chinese" = "中文";
+"language.english" = "English";

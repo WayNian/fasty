@@ -1,0 +1,50 @@
+/* 设置 */
+"settings.general" = "通用";
+"settings.appearance" = "外观";
+"settings.keybindings" = "快捷键";
+"settings.advanced" = "高级";
+
+/* 通用设置 */
+"general.shell" = "Shell";
+"general.shell.default" = "默认 Shell";
+"general.shell.workdir" = "工作目录";
+"general.shell.restore" = "启动时恢复上次会话";
+"general.window" = "窗口";
+"general.window.restore" = "启动时恢复窗口状态";
+"general.window.focusLoss" = "失去焦点时打开新窗口";
+
+/* 外观设置 */
+"appearance.theme" = "主题";
+"appearance.font" = "字体";
+"appearance.font.family" = "字体族";
+"appearance.font.size" = "字体大小";
+"appearance.window" = "窗口";
+"appearance.window.translucent" = "半透明背景";
+"appearance.window.opacity" = "不透明度";
+"appearance.window.cursor" = "光标样式";
+"appearance.window.cursor.block" = "方块";
+"appearance.window.cursor.beam" = "竖线";
+"appearance.window.cursor.underline" = "下划线";
+
+/* 快捷键设置 */
+"keybindings.global" = "全局快捷键";
+"keybindings.quickTerminal" = "快速终端 (Ctrl+`)";
+"keybindings.custom" = "自定义快捷键可在配置文件中设置。";
+"keybindings.ghostty" = "Fasty 支持 Ghostty 兼容的快捷键语法。";
+
+/* 高级设置 */
+"advanced.config" = "配置";
+"advanced.config.path" = "配置文件路径";
+"advanced.config.load" = "加载 Ghostty 配置";
+"advanced.config.open" = "打开配置文件";
+"advanced.debug" = "调试";
+"advanced.debug.logLevel" = "日志级别";
+"advanced.debug.logLevel.error" = "错误";
+"advanced.debug.logLevel.warning" = "警告";
+"advanced.debug.logLevel.info" = "信息";
+"advanced.debug.logLevel.debug" = "调试";
+
+/* 语言设置 */
+"language" = "语言";
+"language.chinese" = "中文";
+"language.english" = "English";

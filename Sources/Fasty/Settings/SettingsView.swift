@@ -4,18 +4,18 @@ struct SettingsView: View {
     var body: some View {
         TabView {
             GeneralSettingsView()
-                .tabItem { Label("General", systemImage: "gear") }
+                .tabItem { Label(NSLocalizedString("settings.general"), systemImage: "gear") }
 
             AppearanceSettingsView()
-                .tabItem { Label("Appearance", systemImage: "paintbrush") }
+                .tabItem { Label(NSLocalizedString("settings.appearance"), systemImage: "paintbrush") }
 
             KeybindingSettingsView()
-                .tabItem { Label("Keybindings", systemImage: "keyboard") }
+                .tabItem { Label(NSLocalizedString("settings.keybindings"), systemImage: "keyboard") }
 
             AdvancedSettingsView()
-                .tabItem { Label("Advanced", systemImage: "wrench") }
+                .tabItem { Label(NSLocalizedString("settings.advanced"), systemImage: "wrench") }
         }
-        .frame(width: 500, height: 400)
+        .frame(width: 500, height: 450)
     }
 }
 
@@ -24,19 +24,29 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         Form {
-            Section("Shell") {
-                TextField("Default Shell:", text: $settings.defaultShell)
-                    .textFieldStyle(.roundedBorder)
-
-                TextField("Working Directory:", text: $settings.workingDirectory)
-                    .textFieldStyle(.roundedBorder)
-
-                Toggle("Restore previous session on launch", isOn: $settings.restoreSession)
+            Section(NSLocalizedString("language")) {
+                Picker("", selection: $settings.appLanguage) {
+                    ForEach(AppLanguage.allCases, id: \.self) { lang in
+                        Text(lang.displayName).tag(lang)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
             }
 
-            Section("Window") {
-                Toggle("Restore window state on launch", isOn: $settings.restoreWindowState)
-                Toggle("Open new window on focus loss", isOn: $settings.openOnFocusLoss)
+            Section(NSLocalizedString("general.shell")) {
+                TextField(NSLocalizedString("general.shell.default") + ":", text: $settings.defaultShell)
+                    .textFieldStyle(.roundedBorder)
+
+                TextField(NSLocalizedString("general.shell.workdir") + ":", text: $settings.workingDirectory)
+                    .textFieldStyle(.roundedBorder)
+
+                Toggle(NSLocalizedString("general.shell.restore"), isOn: $settings.restoreSession)
+            }
+
+            Section(NSLocalizedString("general.window")) {
+                Toggle(NSLocalizedString("general.window.restore"), isOn: $settings.restoreWindowState)
+                Toggle(NSLocalizedString("general.window.focusLoss"), isOn: $settings.openOnFocusLoss)
             }
         }
         .formStyle(.grouped)
@@ -55,12 +65,12 @@ struct AppearanceSettingsView: View {
             )
 
             Form {
-                Section("Font") {
-                    TextField("Font Family:", text: $settings.fontFamily)
+                Section(NSLocalizedString("appearance.font")) {
+                    TextField(NSLocalizedString("appearance.font.family") + ":", text: $settings.fontFamily)
                         .textFieldStyle(.roundedBorder)
 
                     HStack {
-                        Text("Font Size:")
+                        Text(NSLocalizedString("appearance.font.size") + ":")
                         Slider(value: $settings.fontSize, in: 10...24, step: 1)
                         Text("\(Int(settings.fontSize))")
                             .monospacedDigit()
@@ -68,11 +78,11 @@ struct AppearanceSettingsView: View {
                     }
                 }
 
-                Section("Window") {
-                    Toggle("Translucent background", isOn: $settings.translucentBackground)
+                Section(NSLocalizedString("appearance.window")) {
+                    Toggle(NSLocalizedString("appearance.window.translucent"), isOn: $settings.translucentBackground)
                     if settings.translucentBackground {
                         HStack {
-                            Text("Opacity:")
+                            Text(NSLocalizedString("appearance.window.opacity") + ":")
                             Slider(value: $settings.backgroundOpacity, in: 0.3...1.0, step: 0.05)
                             Text("\(Int(settings.backgroundOpacity * 100))%")
                                 .monospacedDigit()
@@ -80,10 +90,10 @@ struct AppearanceSettingsView: View {
                         }
                     }
 
-                    Picker("Cursor Style:", selection: $settings.cursorStyle) {
-                        Text("Block").tag(CursorStyle.block)
-                        Text("Beam").tag(CursorStyle.beam)
-                        Text("Underline").tag(CursorStyle.underline)
+                    Picker(NSLocalizedString("appearance.window.cursor") + ":", selection: $settings.cursorStyle) {
+                        Text(NSLocalizedString("appearance.window.cursor.block")).tag(CursorStyle.block)
+                        Text(NSLocalizedString("appearance.window.cursor.beam")).tag(CursorStyle.beam)
+                        Text(NSLocalizedString("appearance.window.cursor.underline")).tag(CursorStyle.underline)
                     }
                 }
             }
@@ -98,14 +108,14 @@ struct KeybindingSettingsView: View {
 
     var body: some View {
         Form {
-            Section("Global Shortcuts") {
-                Toggle("Quick Terminal (Ctrl+`)", isOn: $settings.quickTerminalEnabled)
+            Section(NSLocalizedString("keybindings.global")) {
+                Toggle(NSLocalizedString("keybindings.quickTerminal"), isOn: $settings.quickTerminalEnabled)
             }
 
-            Section("Keybindings") {
-                Text("Custom keybindings can be configured in the config file.")
+            Section(NSLocalizedString("settings.keybindings")) {
+                Text(NSLocalizedString("keybindings.custom"))
                     .foregroundColor(.secondary)
-                Text("Fasty supports Ghostty-compatible keybind syntax.")
+                Text(NSLocalizedString("keybindings.ghostty"))
                     .foregroundColor(.secondary)
             }
         }
@@ -119,25 +129,25 @@ struct AdvancedSettingsView: View {
 
     var body: some View {
         Form {
-            Section("Configuration") {
-                TextField("Config File Path:", text: $settings.configPath)
+            Section(NSLocalizedString("advanced.config")) {
+                TextField(NSLocalizedString("advanced.config.path") + ":", text: $settings.configPath)
                     .textFieldStyle(.roundedBorder)
 
-                Button("Load Ghostty Config") {
+                Button(NSLocalizedString("advanced.config.load")) {
                     settings.loadGhosttyConfig()
                 }
 
-                Button("Open Config File") {
+                Button(NSLocalizedString("advanced.config.open")) {
                     settings.openConfigFile()
                 }
             }
 
-            Section("Debug") {
-                Picker("Log Level:", selection: $settings.logLevel) {
-                    Text("Error").tag(LogLevel.error)
-                    Text("Warning").tag(LogLevel.warning)
-                    Text("Info").tag(LogLevel.info)
-                    Text("Debug").tag(LogLevel.debug)
+            Section(NSLocalizedString("advanced.debug")) {
+                Picker(NSLocalizedString("advanced.debug.logLevel") + ":", selection: $settings.logLevel) {
+                    Text(NSLocalizedString("advanced.debug.logLevel.error")).tag(LogLevel.error)
+                    Text(NSLocalizedString("advanced.debug.logLevel.warning")).tag(LogLevel.warning)
+                    Text(NSLocalizedString("advanced.debug.logLevel.info")).tag(LogLevel.info)
+                    Text(NSLocalizedString("advanced.debug.logLevel.debug")).tag(LogLevel.debug)
                 }
             }
         }
