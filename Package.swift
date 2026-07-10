@@ -8,7 +8,7 @@ let package = Package(
         .macOS(.v14)
     ],
     dependencies: [
-        .package(url: "https://github.com/Lakr233/libghostty-spm.git", from: "1.2.0"),
+        .package(path: "../libghostty-spm"),
     ],
     targets: [
         .target(
