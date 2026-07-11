@@ -13,12 +13,11 @@ struct FastyApp: App {
                 .environmentObject(settings)
                 .frame(minWidth: 600, minHeight: 400)
                 .onAppear {
-                    configureAppearance()
+                    NSWindow.allowsAutomaticWindowTabbing = false
                 }
         }
         .defaultSize(width: 900, height: 600)
         .windowStyle(.hiddenTitleBar)
-        .windowToolbarStyle(.unified(showsTitle: true))
         .commands {
             CommandGroup(replacing: .newItem) { }
             CommandGroup(after: .pasteboard) {
@@ -32,20 +31,6 @@ struct FastyApp: App {
         Settings {
             SettingsView()
                 .environmentObject(settings)
-        }
-    }
-
-    private func configureAppearance() {
-        NSWindow.allowsAutomaticWindowTabbing = false
-
-        // Aggressive window activation
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            NSApp.activate(ignoringOtherApps: true)
-            for window in NSApp.windows where window.isVisible {
-                window.makeKeyAndOrderFront(nil)
-                window.makeFirstResponder(window.contentView)
-                break
-            }
         }
     }
 }

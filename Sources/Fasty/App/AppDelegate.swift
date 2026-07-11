@@ -2,15 +2,18 @@ import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Set activation policy to make it a regular app (not background)
         NSApp.setActivationPolicy(.regular)
-
-        // Activate and bring to front
         NSApp.activate(ignoringOtherApps: true)
 
-        // Ensure window becomes key after launch
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.bringWindowsToFront()
+            for window in NSApp.windows where window.isVisible {
+                window.makeKeyAndOrderFront(nil)
+                window.level = .normal
+                window.makeFirstResponder(window.contentView)
+                // Enable window dragging by background
+                window.isMovableByWindowBackground = true
+            }
+            NSApp.activate(ignoringOtherApps: true)
         }
     }
 
@@ -22,24 +25,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-    func applicationSupportsRestorableState(_ app: NSApplication) -> Bool {
-        return true
-    }
-
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        bringWindowsToFront()
+        for window in NSApp.windows where window.isVisible {
+            window.makeKeyAndOrderFront(nil)
+        }
+        NSApp.activate(ignoringOtherApps: true)
         return true
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {
-        bringWindowsToFront()
-    }
-
-    private func bringWindowsToFront() {
         for window in NSApp.windows where window.isVisible {
             window.makeKeyAndOrderFront(nil)
-            window.level = .normal
-            window.makeFirstResponder(window.contentView)
         }
         NSApp.activate(ignoringOtherApps: true)
     }

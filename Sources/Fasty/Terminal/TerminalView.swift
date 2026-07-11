@@ -4,7 +4,7 @@ import GhosttyTerminal
 struct TerminalView: View {
     @StateObject private var viewModel: TerminalViewModel
     @EnvironmentObject var settings: SettingsViewModel
-    @State private var backgroundColor: Color = .black
+    @State private var bgColor: Color = .black
 
     init(session: PTYSession) {
         _viewModel = StateObject(wrappedValue: TerminalViewModel(session: session))
@@ -12,11 +12,9 @@ struct TerminalView: View {
 
     var body: some View {
         ZStack {
-            // Background layer
-            backgroundColor
+            bgColor
                 .ignoresSafeArea()
 
-            // Terminal layer
             if viewModel.isReady {
                 TerminalSurfaceView(context: viewModel.terminalState)
                     .navigationTitle(viewModel.title)
@@ -26,13 +24,17 @@ struct TerminalView: View {
             }
         }
         .onAppear {
-            backgroundColor = settings.currentColorScheme.background
+            applyTheme(settings.themeName)
             viewModel.setup()
         }
-        .onChange(of: settings.themeName) { _, newValue in
-            let newTheme = TerminalColorScheme.from(themeName: newValue)
-            backgroundColor = newTheme.background
-            viewModel.updateTheme(newTheme)
+        .onReceive(settings.objectWillChange) { _ in
+            applyTheme(settings.themeName)
         }
+    }
+
+    private func applyTheme(_ name: String) {
+        let scheme = TerminalColorScheme.from(themeName: name)
+        bgColor = scheme.background
+        viewModel.updateTheme(scheme)
     }
 }
